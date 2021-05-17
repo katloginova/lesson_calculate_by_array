@@ -17,21 +17,18 @@ function isOperatorValid(sign) {
     );
 }
 
-function getArrayOperands(separator) {
+function getArrayOperands() {
     let answer = '';
 
     do {
         answer = prompt(`Enter the operands separated by commas`);
-    } while (!isAnswerValid(answer));
+    } while (!isOperandsValid(answer));
 
-    return answer.split(separator);
+    return answer.split(',');
 }
 
-function isAnswerValid(str) {
-    return (
-        str &&
-        (str !== '')
-    );
+function isOperandsValid(str) {
+    return (str !== null && str !== '');
 }
 
 function getResultOperation(arrayOperands, sign) {
@@ -58,13 +55,17 @@ function getResultOperation(arrayOperands, sign) {
 
 function deleteNotNumber(arrayOperands) {
     for (let i = 0; i < arrayOperands.length; i++) {
-        if (isNaN(arrayOperands[i]) || arrayOperands[i] === '') {
+        if (isNumberInvalid(arrayOperands[i])) {
             arrayOperands.splice(i, 1);
             i--;
         }
     }
 
     return arrayOperands;
+}
+
+function isNumberInvalid(num) {
+    return(isNaN(num) || num === '');
 }
 
 function calculate(sign, a, b) {
@@ -81,7 +82,7 @@ function calculate(sign, a, b) {
 }
 
 const operator = getOperator();
-const operands = getArrayOperands(',');
+const operands = getArrayOperands();
 const resultOperation = getResultOperation(operands, operator);
 
 console.log(resultOperation);
